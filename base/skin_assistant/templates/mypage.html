@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block contents %}
+<h3>
+    Hello, there
+</h3>
+
+<a href = "{{url_for('photo')}}">사진</a>
+<p>
+    
+</p>
+<a href = "{{url_for('product')}}">제품</a>
+
+<div>
+    <img src = {{url_for("static", filename = graph)}}
+</div>
+{% endblock contents %}
