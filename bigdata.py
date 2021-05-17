@@ -7,7 +7,8 @@
 import math
 import numpy as np
 import pandas as pd
-
+import sys
+import pymysql
 # In[2]:
 
 
@@ -27,12 +28,12 @@ import seaborn as sns
 from matplotlib import font_manager, rc
 import sys
 
-if sys.platform in ["win32", "win64"]:
-    font_name = "malgun gothic"
-elif sys.platform == "darwin":
-    font_name = "AppleGothic"
+#if sys.platform in ["win32", "win64"]:
+#    font_name = "malgun gothic"
+#elif sys.platform == "darwin":
+#    font_name = "AppleGothic"
 
-rc('font',family=font_name)
+#rc('font',family=font_name)
 
 # # 1. 데이터 전처리
 
@@ -228,7 +229,7 @@ for u_id in similar_user_id_list:
 # In[140]:
 
 
-idx_list_1 = list(map(int, idx_list))
+idx_list_1 = list(map(int, idx_list_1))
 print(idx_list_1)
 
 # In[142]:
@@ -317,8 +318,8 @@ collab_filter.pivot_table('user_id',index='prod_name', columns='score',aggfunc='
 # In[ ]:
 
 
-sns.heatmap(tip2, cmap='Blues', annot=True) 
-plt.show()
+#sns.heatmap(tip2, cmap='Blues', annot=True) 
+#plt.show()
 
 # In[206]:
 
@@ -328,8 +329,8 @@ count_df = collab_filter.pivot_table('user_id',index='prod_name', columns='score
 # In[207]:
 
 
-sns.heatmap(count_df, cmap='Blues', annot=True) 
-plt.show()
+#sns.heatmap(count_df, cmap='Blues', annot=True) 
+#plt.show()
 
 # In[210]:
 
@@ -342,8 +343,14 @@ mean_df = collab_filter.pivot_table('score',index='brand_name',aggfunc='mean').f
 
 
 top5 =collab_filter.groupby('prod_name')[['score']].mean().sort_values(ascending=False,by='score')
+reco = top5[:5]
 
 # In[ ]:
 
-
-
+test_db = pymysql.connect(user='root', passwd='', host='35.180.122.212', port=3306, db='DB', charset='utf8')
+cursor = test_db.cursor()
+sql = "INSERT INTO test (machine, url, date, data) VALUES ('{}', '{}', '{}', '{}')".format(sys.argv[1], sys.argv[2], sys.argv[3].split('.')[0], reco)
+print(sql)
+cursor.execute(sql)
+test_db.commit()
+test_db.close()
