@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/Home.css')}}" media="screen">
+{% endblock %}
+
+
+{% block contents %}
+
+
+    <section class="u-clearfix u-palette-3-base u-section-1" id="carousel_0325">
+      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+          <div class="u-layout-row">
+            <div class="u-container-style u-image u-layout-cell u-left-cell u-size-28 u-image-1">
+              
+              <div class="u-gradient u-shape u-shape-rectangle u-shape-1"></div>
+              <img src="{{url_for('static',filename='images/3c846e997a445f3aad66e662d9aa8d0f.jpg')}}" alt="" 
+class="u-container-layout u-container-layout-1">
+            </div>
+            <div class="u-container-style u-gradient u-layout-cell u-right-cell u-size-32 u-layout-cell-2">
+              <div class="u-container-layout u-container-layout-2">
+                <img src="{{url_for('static',filename='images/Untitled2.png')}}" alt="" class="u-expanded-width-xs u-image u-image-contain u-image-default u-image-2" data-image-width="900" data-image-height="713">
+                <div class="u-container-style u-group u-image u-image-3">
+                  <img src="{{url_for('static',filename='images/c9136f83164e87f749a716bda670db9d.jpg')}}" alt="" 
+class="u-container-layout u-container-layout-3">
+                </div>
+                <div class="u-container-style u-group u-group-2">
+                  <div class="u-container-layout u-valign-middle-sm u-valign-middle-xs u-container-layout-4">
+                    <h1 class="u-text u-text-body-alt-color u-title u-text-1">
+                      <span style="font-weight: normal;">Beauty</span>
+                      <br>Faces
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+{% endblock contents %}    
