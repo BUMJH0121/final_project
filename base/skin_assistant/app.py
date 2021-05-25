@@ -39,7 +39,7 @@ def signin_done():
 
 @app.route("/mypage")
 def mypage():
-    graph = f"/graph_img.jpg"
+    graph = "/graph_img.jpg"
     return render_template("mypage.html", graph=graph)
 
 @app.route("/mypage/photo")
