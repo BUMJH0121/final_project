@@ -3,7 +3,7 @@ from functools import wraps
 import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
-import ed25519
+
 #from dotenv import load_dotenv, find_dotenv
 from flask import Flask
 from flask import jsonify
@@ -21,7 +21,7 @@ app = Flask(__name__)
 app.secret_key = "abcdefg"
 
 
-auth = OAuth(app)
+oauth = OAuth(app)
 
 auth0 = oauth.register(
         'auth0',
@@ -37,7 +37,7 @@ auth0 = oauth.register(
 
 
 @app.route("/")
-def login():
+def rest():
     return render_template("login.html")
 
 @app.route("/login")
