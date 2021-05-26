@@ -9,6 +9,7 @@
 
 
 {% block contents %}
+{% if usern %}
     <section class="u-align-center u-clearfix u-custom-color-1 u-section-1" id="sec-bd0d">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-expanded-width u-gallery u-layout-grid u-lightbox u-show-text-on-hover u-gallery-1">
@@ -100,6 +101,8 @@
         </a>
       </div>
     </section>
-    
+  {% else %}
+  <h4>로그인이 필요합니다.</h4>
+  {% endif %}
     
 {% endblock contents %}   

@@ -9,6 +9,7 @@
 
 
 {% block contents %}
+{%if usern%}
     <section class="u-clearfix u-custom-color-1 u-section-1" id="sec-2d16">
       <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
         <div class="u-layout">
@@ -40,5 +41,7 @@
         </div>
       </div>
     </section>
-    
+{% else %}
+<h4>로그인이 필요합니다.</h4>
+{% endif %}
 {% endblock contents %}   
