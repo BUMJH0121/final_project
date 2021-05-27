@@ -1,4 +1,4 @@
-from flask import request, flash
+from flask import request
 from functools import wraps
 import json
 from os import environ as env
@@ -6,14 +6,13 @@ from werkzeug.exceptions import HTTPException
 
 #from dotenv import load_dotenv, find_dotenv
 from flask import Flask
-from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import session
 from flask import url_for
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
-import sys
+import pymysql
 #from DB_handler import DBModule
 # import database
 app = Flask(__name__)
@@ -118,6 +117,8 @@ def graph():
 @app.route("/home/photo")
 def photo():
     user_name = session.get('profile', None)
+    
+
     return render_template("Photo.html", usern = user_name)
     
 @app.route("/home/product")
@@ -125,9 +126,31 @@ def product():
     user_name = session.get('profile', None)
     return render_template("Product.html", usern = user_name)
 
+@app.route("/mypage")
+@requires_auth
+def mypage():
+    user_name = session.get('profile', None)
+    test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
+    cursor = test_db.cursor(pymysql.cursors.DictCursor)
+    sql = "SELECT gender FROM user_info where name = '{}'".format(user_name['name'])
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    flag = "False"
+    if result:
+        flag = "True"
+    return render_template("Mypage.html", flag = flag, usern = user_name)
 
-
-
+@app.route("/register", methods=["POST"])
+def register():
+    if request.method == 'POST':
+        user = session.get('profile', None)
+        res = request.form.to_dict()
+        test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
+        cursor = test_db.cursor(pymysql.cursors.DictCursor)
+        sql = "INSERT INTO user_info (user_id, skin_type, age, gender, machine_no, name) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(user['user_id'],res['skin_type'],res['age'],res['gender'],res['machine_no'],user['name'])
+        cursor.execute(sql)
+        test_db.commit()
+    return redirect("/mypage")
 
 
 
