@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import requests
-
+import pymysql
+import time
 from scripts.weather import get_weather
 
 app = Flask(__name__)
@@ -18,10 +19,30 @@ def update_weather():
 	currentWeather = get_weather()
 	return jsonify({'result' : 'success', 'currentWeather' : currentWeather})
 
-@app.route('/result/<serial>/<date>')
-def result(serial, date):
-    return f'myserial:{serial}, today is {date}'
+@app.route("/result/<serialnum>/<date>", methods=['POST', 'GET'])
+def result(serialnum, date):
+    user_conf = {}
+    user_conf['serialnum'] = serialnum
+    user_conf['date'] = date
+    if request.method == 'POST':
+        sql = "SELECT * FROM user_face  where machine_no = '{}' and date ='{}'".format(serialnum, date)
+        rows = []
+        while True:
+            test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', port=3306, db='mydb', charset='UTF8')
+            cursor = test_db.cursor(pymysql.cursors.DictCursor)
+            cursor.execute("set names utf8")
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+            test_db.close()
+            if rows:
+                break
+            time.sleep(5)
+            print("not exist data")
+        print("DONE")
+        return rows[0]
+    return render_template("loading.html", data = user_conf)
+
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    app.run(host="192.168.35.106",port=5000, debug=True)
+    app.run(host="0.0.0.0",port=5000, debug=True)

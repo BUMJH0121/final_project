@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="{{ url_for('static', filename = 'js/time.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename = 'js/weather.js') }}"></script>
 	<!-- <script type="module" src="{{ url_for('static', filename = 'js/listener.js') }}"></script> -->
-
+        {% block head %}{% endblock %}
 </head>
 <body>
 	{% block content %}{% endblock %}

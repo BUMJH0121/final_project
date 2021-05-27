@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block head %}
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+        setTimeout(function(){
+	    var user = {{data|tojson}};
+	    var form = document.createElement('form');
+	    form.setAttribute('method', 'post');
+	    form.setAttribute('action', "http://13.36.176.131:5000/result/"+user['serialnum']+"/"+user['date']);
+	    document.charset = "utf-8";
+	    document.body.appendChild(form);
+	    form.submit();}, 0);
+        </script> 
+    </head>
+{% endblock %}
+    {% block content %}
+    <body>
+        <div id="loadingBar">
+            <img id="loading-image" src="https://yongjae-team09-user-data-s3.s3.eu-west-3.amazonaws.com/InternetSlowdown_Day.gif" alt="loading..." />
+        </div>
+    </body>
+    {% endblock %}
