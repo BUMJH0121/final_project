@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block content %}
 	<div class='home-container'>
 
@@ -22,9 +23,21 @@
 			</div>
 		</div>
 
-		<!-- <div class='mirror-middle-container' id='widget-content'>
-			
-		</div> -->
+		<div class='mirror-middle-container' id='widget-content'>
+		
+		</div>
+
+		<script>
+			function viewresult(data){
+				const element = document.getElementById('widget-content');
+				element.innerHTML = '<div>' + data + '<div>'
+				console.log(data)
+			};
+			function confirm(){
+				fetch('/findmachine/1518').then((response) => response.text()).then((data) => viewresult(data));
+			}
+			setInterval(confirm, 60000);
+		</script>
 
 	</div>
 {% endblock content %}

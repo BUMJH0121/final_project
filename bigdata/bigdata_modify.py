@@ -67,7 +67,7 @@ data = pd.DataFrame(data.items(), columns=['data','freq'])
 for i in range(len(data)) :
     if (data.loc[i][0] == 'serialnum') :
         machine = data.loc[i][1]
-
+print(machine)
 
 # In[107]:
 
@@ -98,7 +98,7 @@ sym_info = pd.read_sql(SQL,db)
 SQL = """SELECT user_id FROM user_info WHERE machine_no = """+str(machine)+""""""
 user_info = pd.read_sql(SQL,db)
 db.close()
-
+print(user_info)
 # 진단할 수 있는 sym의 종류
 sym_list = sym_info['sym_name'][1:]
 

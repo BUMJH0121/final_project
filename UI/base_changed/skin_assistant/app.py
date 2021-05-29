@@ -35,10 +35,6 @@ auth0 = oauth.register(
 )
 
 
-@app.route("/")
-def rest():
-    return render_template("login.html")
-
 @app.route("/login")
 def login():
     return auth0.authorize_redirect(redirect_uri='http://127.0.0.1:5000/callback')
@@ -101,6 +97,7 @@ def signin_done():
   #  else:
   #      return redirect(url_for("signin"))
 
+@app.route("/")
 @app.route("/home")
 def home():
     user_name = session.get('profile', None)
@@ -110,11 +107,13 @@ def home():
     return render_template("Home.html", usern = user_name)
 
 @app.route("/home/graph")
+@requires_auth
 def graph():
     user_name = session.get('profile', None)
     return render_template("Graph.html", usern = user_name)
 
 @app.route("/home/photo")
+@requires_auth
 def photo():
     user_name = session.get('profile', None)
     
@@ -122,6 +121,7 @@ def photo():
     return render_template("Photo.html", usern = user_name)
     
 @app.route("/home/product")
+@requires_auth
 def product():
     user_name = session.get('profile', None)
     return render_template("Product.html", usern = user_name)

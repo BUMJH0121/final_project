@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import requests
 import pymysql
 import time
-from scripts.weather import get_weather
+#from scripts.weather import get_weather
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def update_weather():
 	'''
 	Returns updated weather, called every 10 minutes
 	'''
-	currentWeather = get_weather()
+	#currentWeather = get_weather()
 	return jsonify({'result' : 'success', 'currentWeather' : currentWeather})
 
 @app.route("/result/<serialnum>/<date>", methods=['POST', 'GET'])
@@ -41,6 +41,18 @@ def result(serialnum, date):
         print("DONE")
         return rows[0]
     return render_template("loading.html", data = user_conf)
+
+@app.route("/findmachine/<machine_no>")
+def findmachine(machine_no):
+    flag = "기기 등록이 필요합니다."
+    test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', port=3306, db='mydb', charset='UTF8')
+    cursor = test_db.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT name from user_info where machine_no = {}".format(machine_no))
+    machine = cursor.fetchall()
+    test_db.close()
+    if machine:
+        flag = ""
+    return flag
 
 
 if __name__ == '__main__':

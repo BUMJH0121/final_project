@@ -67,29 +67,34 @@
         </nav>
       </div></header> 
       {%if usern%}
-      {{usern.name}}님 환영합니다.<button type="button" onclick="location.href='/logout'">로그아웃</button>
+      <h5 class="u-text">
+        <span style="font-weight: normal;">{{usern.name}}님 환영합니다.</span>
+      </li><li class="u-nav-item"><a class="u-button-style" href="/logout" style="padding: 5px 10px;">로그아웃</a>
+      </h5>
       {% else %}
-      <div class="login-box auth0-box before">
-        <a class="btn btn-primary btn-lg btn-login btn-block" href="/login">Log In</a>
-      </div>
+      <h5 class="u-text">
+      </li><li class="u-nav-item"><a class="u-button-style" href="/login" style="padding: 5px 10px;">로그인</a>
+      </h5>
+    
+    <!-- Filter: https://css-tricks.com/gooey-effect/ -->
+    <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />    
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+                <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+            </filter>
+        </defs>
+    </svg>
+    
+    
       {% endif %}
     {% block contents %}
 
     {% endblock contents %}
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-2618"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-small-text u-text u-text-variant u-text-1">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
       </div></footer>
     <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-        <span>Website Templates</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.com/" target="_blank">
-        <span>Website Builder Software</span>
-      </a>. 
     </section>
   </body>
 </html>
