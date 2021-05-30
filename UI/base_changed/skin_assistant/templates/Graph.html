@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/Graph.css')}}" media="screen">
+
 {% endblock %}
     
     
@@ -10,37 +10,32 @@
 
 {% block contents %}
 {%if usern%}
-    <section class="u-clearfix u-custom-color-1 u-section-1" id="sec-2d16">
-      <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
-        <div class="u-layout">
-          <div class="u-layout-row">
-            <div class="u-container-style u-layout-cell u-left-cell u-size-27 u-layout-cell-1">
-              <div class="u-container-layout u-container-layout-1">
-                <div class="u-container-style u-gradient u-group u-shape-rectangle u-group-1">
-                  <div class="u-container-layout u-container-layout-2">
-                    <div class="u-container-style u-group u-group-2">
-                      <div class="u-container-layout u-valign-top-lg u-valign-top-md">
-                        <div class="u-border-3 u-border-white u-line u-line-horizontal u-line-1"></div>
-                        <p class="u-text u-text-1">Graph</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="u-container-style u-layout-cell u-right-cell u-size-33 u-layout-cell-2">
-              <div class="u-container-layout u-container-layout-4">
-                <div class="u-container-style u-group u-palette-2-base u-shape-rectangle u-group-3">
-                  <div class="u-container-layout u-container-layout-5">
-                    <img src="{{url_for('static',filename='images/bdefcaf37d5bdc8540a6909a6a705d75.jpg')}}" alt="" class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-image u-image-contain u-image-default u-image-1" data-image-width="564" data-image-height="794">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<canvas id="myChart" width="300" height="200"></canvas>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+<script>
+  var data = JSON.parse({{graph|tojson}})
+  console.log(typeof(data), data)
+var data = {
+	labels: ["1월", "2월", "3월", "4월", "5월", "6월"],
+	datasets: [
+		{
+			label: "My First dataset",
+			fillColor: "rgba(150,200,250,0.5)",
+			strokeColor: "rgba(150,200,250,0.8)",
+			highlightFill: "rgba(150,200,250,0.75)",
+			highlightStroke: "rgba(150,200,250,1)",
+			data: [65, 59, 80, 81, 56, 55]
+		}
+	]
+};
+var options = {	animation: false };
+var ctx = $('#myChart').get(0).getContext('2d');
+var myBarChart = new Chart(ctx).Bar(data, options);
+</script>
+
+
 {% else %}
 <h4>로그인이 필요합니다.</h4>
 {% endif %}

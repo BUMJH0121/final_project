@@ -110,7 +110,12 @@ def home():
 @requires_auth
 def graph():
     user_name = session.get('profile', None)
-    return render_template("Graph.html", usern = user_name)
+    db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
+    sql = "SELECT * FROM face_detail"
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    return render_template("Graph.html", usern = user_name, graph=json.dumps(data))
 
 @app.route("/home/photo")
 @requires_auth
