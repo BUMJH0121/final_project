@@ -4189,8 +4189,8 @@ ol {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
 }
 .u-background-effect {
   overflow: hidden;
@@ -33390,14 +33390,14 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-table-alt-custom-color-1 tr:nth-child(even)
         {
             color: #ffffff;
-            background-color: #067c86;
+            background-color: #ffffff;
         }
 
         .u-button-style.u-custom-color-1,
         .u-button-style.u-custom-color-1[class*="u-border-"]
         {
             color: #ffffff !important;
-            background-color: #067c86 !important;
+            background-color: #ffffff !important;
         }
 
         .u-button-style.u-custom-color-1:hover,
@@ -33412,7 +33412,7 @@ a.u-link.u-text-hover-grey-90:hover {
         li.active > .u-button-style.u-button-style.u-custom-color-1[class*="u-border-"]
         {
             color: #ffffff !important;
-            background-color: #057079 !important;
+            background-color: #ffffff !important;
         }
 
         .u-hover-custom-color-1:hover,
@@ -33437,11 +33437,11 @@ a.u-link.u-text-hover-grey-90:hover {
         li.active > a.u-button-style.u-button-style.u-active-custom-color-1[class*="u-border-"]
         {
             color: #ffffff !important;
-            background-color: #067c86 !important;
+            background-color: #ffffff !important;
         }
 
         a.u-link.u-hover-custom-color-1:hover {
-            color: #067c86 !important;
+            color: #ffffff !important;
         }
 
         

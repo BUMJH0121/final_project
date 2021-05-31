@@ -121,15 +121,28 @@ def graph():
 @requires_auth
 def photo():
     user_name = session.get('profile', None)
-    
-
-    return render_template("Photo.html", usern = user_name)
+    test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
+    cursor = test_db.cursor(pymysql.cursors.DictCursor)
+    sql = "select distinct img_url1, date from user_face where machine_no = '{}' limit 30".format("1000000032965b6f")
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    test_db.close()
+    for i in result:
+        i['date'] = i['date'].strftime('%Y-%m-%d')
+    return render_template("Photo.html", usern = user_name, result=sorted(result, key=lambda r: r['date'], reverse=True))
     
 @app.route("/home/product")
 @requires_auth
 def product():
-    user_name = session.get('profile', None)
-    return render_template("Product.html", usern = user_name)
+    user = session.get('profile', None)
+    user_id = user['user_id']
+    test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
+    cursor = test_db.cursor(pymysql.cursors.DictCursor)
+    sql = "SELECT prod_name, brand, price, img_url, category from product_data join product_result on product_data.product_data_id=product_result.product_data_id where product_result.date = (select MAX(date) from product_result) and product_result.user_id = '{}' order by product_result.product_result_id DESC limit 15".format("oauth2|kakao|1750600619")
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    test_db.close()
+    return render_template("Product.html", usern = user, result=result)
 
 @app.route("/mypage")
 @requires_auth

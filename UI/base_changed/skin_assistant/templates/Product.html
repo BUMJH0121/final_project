@@ -2,10 +2,10 @@
 
 
 {% block contents %}
-
-<div>
-    <table>
-        <td>하이</td>
-    </table>
-</div>
+{% for i in result %}
+{{i.prod_name}}
+{{i.brand}}
+{{i.price}}
+{{i.img_url}}
+{% endfor %}
 {% endblock contents %}
