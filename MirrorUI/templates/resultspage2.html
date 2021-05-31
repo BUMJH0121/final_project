@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block head %}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+    <script type="text/javascript">
+    function startScroll(interval) {
+        setInterval("autoScroll()", interval);
+    }
+    
+    function autoScroll() {
+        window.scrollBy(0,20); // 10픽셀 위로 스크롤
+    }
+        </script> 
+    </head>
+{% endblock %}
+
+{% block content %}
+        <div class="recommend-title">&#60; 추천 제품 &#62;</div>
+        <div class="recommend-result-container">
+            {% if gender == 'm' %}
+            <p style="margin:1%"><img src="{{data['skin/lotion'].imgurl}}" align="left">&nbsp;&nbsp;스킨/로션 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['skin/lotion'].name}},<br>&nbsp;&nbsp;{{data['skin/lotion'].price}}원 <br clear=left></p>
+            <p style="margin:1%"><img src="{{data['essence/cream'].imgurl}}" align="left">&nbsp;&nbsp;에센스/크림 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['essence/cream'].name}},<br>&nbsp;&nbsp;{{data['essence/cream'].price}}원 <br clear=left></p>
+            <p style="margin:1%"><img src="{{data['all_in_one'].imgurl}}" align="left">&nbsp;&nbsp;올인원 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['all_in_one'].name}},<br>&nbsp;&nbsp;{{data['all_in_one'].price}}원 <br clear=left></p>
+            {% elif gender == 'f' %}
+            <p style="margin:1%"><img src="{{data['skin/toner'].imgurl}}" align="left">&nbsp;&nbsp;스킨/토너 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['skin/toner'].name}},<br>&nbsp;&nbsp;{{data['skin/toner'].price}}원 <br clear=left></p>
+            <p style="margin:1%"><img src="{{data['lotion/emulsion'].imgurl}}" align="left">&nbsp;&nbsp;로션/에멀전 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['lotion/emulsion'].name}},<br>&nbsp;&nbsp;{{data['lotion/emulsion'].price}}원 <br clear=left></p>
+            <p style="margin:1%"><img src="{{data['essence/serum'].imgurl}}" align="left">&nbsp;&nbsp;에센스/세럼 Best&#33;&#33;<br>&nbsp;&nbsp;{{data['essence/serum'].name}},<br>&nbsp;&nbsp;{{data['essence/serum'].price}}원 <br clear=left></p>
+            {% endif %}
+        </div>
+
+{% endblock content %}
