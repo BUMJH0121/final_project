@@ -3,7 +3,7 @@ from functools import wraps
 import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
-
+import pandas as pd
 #from dotenv import load_dotenv, find_dotenv
 from flask import Flask
 from flask import redirect
@@ -110,12 +110,139 @@ def home():
 @requires_auth
 def graph():
     user_name = session.get('profile', None)
-    db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
-    sql = "SELECT * FROM face_detail"
-    cursor = db.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    return render_template("Graph.html", usern = user_name, graph=json.dumps(data))
+    user_id = 'oauth2|kakao|1750600619'
+    sql = "SELECT user_face.user_face_id, sym_id, date, forehead, cheek_R, cheek_L, nose, philtrum, chin FROM user_face left JOIN face_detail ON user_face.user_face_id=face_detail.user_face_id Where user_id=%s"  # 생성
+    dbconn = pymysql.connect(
+    host='35.180.122.212',
+    port=3306, user = 'root',
+    password = 'team09',
+    db = 'mydb',
+    charset='utf8'
+    )
+    cursor = dbconn.cursor(pymysql.cursors.DictCursor)
+    row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
+
+    if row_count > 0:  # select된 결과가 있으면
+        user_info = cursor.fetchall()  # row 객체 가져오기
+        print('user_info: ', user_info)
+    else:
+        print('User does not exist')
+
+    data = pd.DataFrame(user_info)
+
+    data['sum'] = data['forehead'] + data['cheek_R'] + data['nose'] + data['philtrum'] + data['chin'] + data['cheek_L']
+
+
+    # 최근 일주일 데이터 가져오기
+    from datetime import date, timedelta as td
+    x = date.today()
+    y = date.today() - td(6)
+
+    filtered_df = data.loc[data["date"].between(y, x)]
+
+    week = []
+    delta = x - y
+
+    for i in range(delta.days + 1):
+        week.append((x - td(days=i)).strftime("%Y-%m-%d"))
+
+    filtered_df.drop(columns=['cheek_L', 'cheek_R', 'chin', 'nose', 'philtrum', 'forehead'], inplace=True)
+
+    code2_df = filtered_df[filtered_df['sym_id'] == 2]
+    code3_df = filtered_df[filtered_df['sym_id'] == 3]
+
+    code2_df.drop(columns=['sym_id', 'user_face_id'], inplace=True)
+    code3_df.drop(columns=['sym_id', 'user_face_id'], inplace=True)
+
+    code2_df['date'] = code2_df['date'].astype(str)
+    code3_df['date'] = code3_df['date'].astype(str)
+
+    new2 = code2_df['date'].tolist()
+    new3 = code3_df['date'].tolist()
+    for day in week:
+        if (day in new2):
+            pass
+        else:
+            temp = {'date': [day],
+                    'sum': [0]}
+            temp2 = pd.DataFrame(temp)
+            code2_df = pd.concat([code2_df, temp2])
+
+    for day in week:
+        if (day in new3):
+            pass
+        else:
+            temp = {'date': [day],
+                    'sum': [0]}
+            temp2 = pd.DataFrame(temp)
+            code3_df = pd.concat([code3_df, temp2])
+
+    day2 = []
+    value2 = []
+    value3 = []
+
+    code2_df = code2_df.sort_values('date')
+    code3_df = code3_df.sort_values('date')
+
+    day2 = [day for day in code2_df['date']]
+    value2 = [value for value in code2_df['sum']]
+    value3 = [value for value in code3_df['sum']]
+    ################## 일주일 끝 ##############################
+    ## 한달 시작#
+
+    x = date.today()
+    y = date.today() - td(30)
+
+    filtered_df = data.loc[data["date"].between(y, x)]
+
+    week = []
+    delta = x - y
+
+    for i in range(delta.days + 1):
+        week.append((x - td(days=i)).strftime("%Y-%m-%d"))
+
+    filtered_df.drop(columns=['cheek_L', 'cheek_R', 'chin', 'nose', 'philtrum', 'forehead'], inplace=True)
+
+    code4_df = filtered_df[filtered_df['sym_id'] == 2]
+    code5_df = filtered_df[filtered_df['sym_id'] == 3]
+
+    code4_df.drop(columns=['sym_id', 'user_face_id'], inplace=True)
+    code5_df.drop(columns=['sym_id', 'user_face_id'], inplace=True)
+
+    code4_df['date'] = code4_df['date'].astype(str)
+    code5_df['date'] = code5_df['date'].astype(str)
+
+    new4 = code4_df['date'].tolist()
+    new5 = code5_df['date'].tolist()
+    for day in week:
+        if (day in new4):
+            pass
+        else:
+            temp = {'date': [day],
+                    'sum': [0]}
+            temp2 = pd.DataFrame(temp)
+            code4_df = pd.concat([code4_df, temp2])
+
+    for day in week:
+        if (day in new5):
+            pass
+        else:
+            temp = {'date': [day],
+                    'sum': [0]}
+            temp2 = pd.DataFrame(temp)
+            code5_df = pd.concat([code5_df, temp2])
+
+    day4 = []
+    value4 = []
+    value5 = []
+
+    code4_df = code4_df.sort_values('date')
+    code5_df = code5_df.sort_values('date')
+
+    day4 = [day for day in code4_df['date']]
+    value4 = [value for value in code4_df['sum']]
+    value5 = [value for value in code5_df['sum']]
+    return render_template("Graph.html", usern = user_name, **locals())
 
 @app.route("/home/photo")
 @requires_auth
