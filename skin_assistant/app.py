@@ -323,7 +323,7 @@ def product():
         elif result[i]['category']==c3:
             cate3.append([result[i]['img_url'],result[i]['brand'],result[i]['prod_name'],result[i]['price']])
     test_db.close()
-    return render_template("Product.html", usern = user, cate1 = cate1, cate2 = cate2, cate3 = cate3)
+    return render_template("Product.html", usern = user, cate1 = cate1, cate2 = cate2, cate3 = cate3, c1=c1, c2=c2, c3=c3)
 
 @app.route("/mypage")
 @requires_auth
