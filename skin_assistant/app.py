@@ -120,6 +120,7 @@ def graph():
     charset='utf8'
     )
     cursor = dbconn.cursor(pymysql.cursors.DictCursor)
+    row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
     # 증상, 원인에 대한 sql
     sql = "SELECT distinct user_face.date, prescription_data.sym_id, prescription_data.sym_name,prescription_data.symptom, prescription_data.cause, prescription_data.caution, prescription_data.solution FROM prescription_data JOIN user_face WHERE user_face.date = (select MAX(date) from user_face) and user_face.sym_id = prescription_data.sym_id  limit 3" 
     cursor.execute(sql)
@@ -161,7 +162,7 @@ def graph():
         day = i['date'].strftime('%Y-%m-%d')
         recent_30days.append(day)
 
-    row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
+
 
     if row_count > 0:  # select된 결과가 있으면
         user_info = cursor.fetchall()  # row 객체 가져오기
