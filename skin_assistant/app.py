@@ -120,6 +120,47 @@ def graph():
     charset='utf8'
     )
     cursor = dbconn.cursor(pymysql.cursors.DictCursor)
+    # 증상, 원인에 대한 sql
+    sql = "SELECT distinct user_face.date, prescription_data.sym_id, prescription_data.sym_name,prescription_data.symptom, prescription_data.cause, prescription_data.caution, prescription_data.solution FROM prescription_data JOIN user_face WHERE user_face.date = (select MAX(date) from user_face) and user_face.sym_id = prescription_data.sym_id  limit 3" 
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    # 이미지 위 증상별 부위 개수 sql
+    sqls = "SELECT distinct  face_detail.forehead, face_detail.cheek_R, face_detail.nose, face_detail.philtrum, face_detail.chin, face_detail.cheek_L, user_face.sym_id FROM face_detail JOIN user_face WHERE user_face.date = (select MAX(date) from user_face) and user_face.user_face_id = face_detail.user_face_id  limit 1" 
+    cursor.execute(sqls)
+    results = cursor.fetchall()
+    sql1 = "select distinct date from user_face ORDER BY date DESC limit 30;"
+    sql2 = "select sym_id, date from user_face ORDER BY date DESC;"
+    cursor.execute(sql1)
+    date = cursor.fetchall()
+    cursor.execute(sql2)
+    sym = cursor.fetchall()
+
+    darkcircle = dict()
+    freckle = dict()
+
+    for day in date:
+        for i in sym:
+            if i['date']==day['date']:
+                if i['sym_id']==4:
+                    freckle[day['date'].strftime('%Y-%m-%d')]=1
+                    break
+                else:
+                    freckle[day['date'].strftime('%Y-%m-%d')]=0
+
+    for day in date:
+        for i in sym:
+            if i['date']==day['date']:
+                if i['sym_id']==5:
+                    darkcircle[day['date'].strftime('%Y-%m-%d')]=1
+                    break
+                else:
+                    darkcircle[day['date'].strftime('%Y-%m-%d')]=0
+
+    recent_30days = list()
+    for i in date:
+        day = i['date'].strftime('%Y-%m-%d')
+        recent_30days.append(day)
+
     row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
 
     if row_count > 0:  # select된 결과가 있으면
@@ -242,7 +283,7 @@ def graph():
     day4 = [day for day in code4_df['date']]
     value4 = [value for value in code4_df['sum']]
     value5 = [value for value in code5_df['sum']]
-    return render_template("Graph.html", usern = user_name, **locals())
+    return render_template("Graph.html", usern = user_name, **locals(), result=result, results=results,recent_30days=recent_30days, darkcircle = darkcircle,freckle=freckle)
 
 @app.route("/home/photo")
 @requires_auth

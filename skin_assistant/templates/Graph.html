@@ -32,100 +32,78 @@
 {% block contents %}
 
 
-    <section class="u-clearfix u-section-1" id="sec-47db">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1">[오늘의 기록 : n월 n일 ]</h2>
-        
-        <img class="u-image u-image-1" src="{{ url_for('static', filename='img/face.png')}}" data-image-width="832" data-image-height="594">
-      </div>
-    </section>
-    <section class="u-align-left u-clearfix u-section-2" id="sec-5006">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <h1 class="u-text u-text-custom-color-1 u-text-default u-text-1">증​ 상</h1>
-        <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
-          <div class="u-layout">
-            <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-26 u-layout-cell-1">
-                <div class="u-container-layout u-valign-top u-container-layout-1">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-2">
-                    <span style="font-size: 1.875rem;">트러블 </span>:&nbsp;
-                  </h6>
-                </div>
-              </div>
-              <div class="u-container-style u-layout-cell u-size-34 u-layout-cell-2">
-                <div class="u-container-layout u-container-layout-2">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-3">여드름</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h1 class="u-text u-text-custom-color-1 u-text-default u-text-4">원 인</h1>
-        <div class="u-container-style u-group u-shape-rectangle u-group-1">
-          <div class="u-container-layout u-container-layout-3">
-            <p class="u-text u-text-default u-text-5">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-          </div>
-        </div>
-        <div class="u-clearfix u-layout-wrap u-layout-wrap-2">
-          <div class="u-layout">
-            <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-26 u-layout-cell-3">
-                <div class="u-container-layout u-valign-top u-container-layout-4">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-6">
-                    <span style="font-size: 1.875rem;">트러블 </span>:&nbsp;
-                  </h6>
-                </div>
-              </div>
-              <div class="u-container-style u-layout-cell u-size-34 u-layout-cell-4">
-                <div class="u-container-layout u-container-layout-5">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-7">여드름</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h1 class="u-text u-text-custom-color-1 u-text-default u-text-8">주의사항</h1>
-        <div class="u-container-style u-group u-shape-rectangle u-group-2">
-          <div class="u-container-layout u-container-layout-6">
-            <p class="u-text u-text-default u-text-9">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-          </div>
-        </div>
-        <div class="u-clearfix u-layout-wrap u-layout-wrap-3">
-          <div class="u-layout">
-            <div class="u-layout-row">
-              <div class="u-container-style u-layout-cell u-size-26 u-layout-cell-5">
-                <div class="u-container-layout u-valign-top u-container-layout-7">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-10">
-                    <span style="font-size: 1.875rem;">트러블 </span>:&nbsp;
-                  </h6>
-                </div>
-              </div>
-              <div class="u-container-style u-layout-cell u-size-34 u-layout-cell-6">
-                <div class="u-container-layout u-container-layout-8">
-                  <h6 class="u-custom-font u-font-montserrat u-text u-text-11">여드름</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="u-container-style u-group u-shape-rectangle u-group-3">
-          <div class="u-container-layout u-container-layout-9">
-            <p class="u-text u-text-default u-text-12">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="u-align-left u-clearfix u-section-3" id="sec-13ed">
-      <div class ="container">
-        <div class="row">
-            <div class="'col-md-6"style="width:47%;">
-                <canvas id="myChartOne"></canvas>
-            </div>
-            <div class="'col-md-6" style="width:53%;">
-                <canvas id="myChartTwo"></canvas>
-            </div>
-        </div>
-    </div>
+<section class="u-clearfix u-section-1" id="sec-47db">
+  <div class="u-clearfix u-sheet u-sheet-1">
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-1">[오늘의 기록]</h2>
+    <img class="u-image u-image-1" src="{{ url_for('static', filename='img/face.png')}}" data-image-width="832" data-image-height="594">
+      
+
+      
+    {% for d in results %}
+    {% if d["sym_id"] == 2 %}
+    <h6 class="u-text u-text-2">{{d.cheek_L}}</h6>
+    <h6 class="u-text u-text-3">{{d.cheek_R}}</h6>
+    <h6 class="u-text u-text-4">{{d.forehead}}</h6>
+    <h6 class="u-text u-text-5">{{d.chin}}</h6>
+    {% endif %}
+    {% endfor %}    
+    
+      
+    {% for d in results %}
+    {% if d["sym_id"] == 3 %}  
+    <h6 class="u-text u-text-6">{{d.cheek_L}}</h6>
+    <h6 class="u-text u-text-7">{{d.cheek_R}}</h6>
+    <h6 class="u-text u-text-8">{{d.forehead}}</h6>
+    <h6 class="u-text u-text-9">{{d.chin}}</h6>
+    {% endif %}
+    {% endfor %}  
+      
+    <h6 class="u-text u-text-10">11</h6>
+    <h6 class="u-text u-text-11">13</h6>
+    <h6 class="u-text u-text-12">15</h6>
+    <h6 class="u-text u-text-13">12</h6>
+    <h6 class="u-text u-text-14">17</h6>
+    <h6 class="u-text u-text-15">16</h6>
+      
+      
+    <h6 class="u-text u-text-16">없음</h6>
+    <h6 class="u-text u-text-17">없음</h6>
+      
+  </div>
+</section>
+<section class="u-align-left u-clearfix u-section-2" id="sec-5006">
+  <div class="u-clearfix u-sheet u-sheet-1">
+
+    <h1 class="u-text u-text-custom-color-1 u-text-1">증​ 상</h1> 
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-2">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-3">{{i.sym_name}}</h6>
+    <p class="u-text u-text-4">{{i.symptom}}</p>
+    {% endfor %}
+      
+    
+    <h1 class="u-text u-text-custom-color-1 u-text-5">원 인</h1>
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-6">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-7">{{i.sym_name}}</h6>
+    <p class="u-text u-text-8">{{i.cause}}</p>
+    {% endfor %}  
+      
+    <h1 class="u-text u-text-custom-color-1 u-text-9">주의사항</h1>
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-10">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-11">{{i.sym_name}}</h6>
+    <p class="u-text u-text-12">{{i.caution}}</p>
+    {% endfor %}  
+     
+  </div>
+</section>
+<section class="u-align-left u-clearfix u-section-3" id="sec-13ed">
+  <div class="u-clearfix u-sheet u-sheet-1"></div>
+</section>
+<section class="u-clearfix u-section-4" id="sec-0f2f">
+  <div class="u-clearfix u-sheet u-sheet-1"></div>
+</section>
 <script>
     let myChartOne = document.getElementById('myChartOne').getContext('2d');
     let myChartTwo = document.getElementById('myChartTwo').getContext('2d');
@@ -182,62 +160,71 @@
             }]
         }
     });
-</script>
-    </section>
+
     <h2 align='center'>[한달 기록]</h2>
-    <div id="container1" ></div>
-    <div id="container2"></div>
+    <div align='center' style="font-size: xx-small;">-왼쪽 상단이 가장 최근 기록입니다-<div>
+
+      <br>
+
+    <div id="container2" ></div>
+    <div id="container1"></div>
+
+
     <script>
+      var recent_30days = {{ recent_30days|tojson }};
+      var darkcircle = {{ darkcircle|tojson }};
+      var freckle = {{ freckle|tojson }};
+
       anychart.onDocumentReady(function () {
         // create the data 
         var data = [
-          { x: "1", y: "1", heat: 0},
-          { x: "1", y: "2", heat: 0},
-          { x: "1", y: "3", heat: 0 },
+          { x: "1", y: "1", heat: darkcircle[recent_30days[0]]},
+          { x: "1", y: "2", heat: darkcircle[recent_30days[1]]},
+          { x: "1", y: "3", heat: darkcircle[recent_30days[2]] },
         
-          { x: "2", y: "1", heat:0 },
-          { x: "2", y: "2", heat: 0 },
-          { x: "2", y: "3", heat: 0},
+          { x: "2", y: "1", heat: darkcircle[recent_30days[3]]},
+          { x: "2", y: "2", heat: darkcircle[recent_30days[4]]},
+          { x: "2", y: "3", heat: darkcircle[recent_30days[5]]},
           
-          { x: "3", y: "1", heat: 0 },
-          { x: "3", y: "2", heat:0},
-          { x: "3", y: "3", heat: 0 },
+          { x: "3", y: "1", heat: darkcircle[recent_30days[6]] },
+          { x: "3", y: "2", heat: darkcircle[recent_30days[7]]},
+          { x: "3", y: "3", heat: darkcircle[recent_30days[8]] },
       
-          { x: "4", y: "1", heat: 0 },
-          { x: "4", y: "2", heat: 0 },
-          { x: "4", y: "3", heat: 0 },
+          { x: "4", y: "1", heat: darkcircle[recent_30days[9]] },
+          { x: "4", y: "2", heat: darkcircle[recent_30days[10]] },
+          { x: "4", y: "3", heat: darkcircle[recent_30days[11]] },
        
-          { x: "5", y: "1", heat: 0 },
-          { x: "5", y: "2", heat: 1 },
-          { x: "5", y: "3", heat: 0 },
+          { x: "5", y: "1", heat: darkcircle[recent_30days[12]] },
+          { x: "5", y: "2", heat: darkcircle[recent_30days[13]] },
+          { x: "5", y: "3", heat: darkcircle[recent_30days[14]] },
        
-          { x: "6", y: "1", heat: 0 },
-          { x: "6", y: "2", heat: 0 },
-          { x: "6", y: "3", heat: 0 },
+          { x: "6", y: "1", heat: darkcircle[recent_30days[15]] },
+          { x: "6", y: "2", heat: darkcircle[recent_30days[16]] },
+          { x: "6", y: "3", heat: darkcircle[recent_30days[17]] },
        
         
-          { x: "7", y: "1", heat: 0 },
-          { x: "7", y: "2", heat: 0 },
-          { x: "7", y: "3", heat: 0 },
+          { x: "7", y: "1", heat: darkcircle[recent_30days[18]] },
+          { x: "7", y: "2", heat: darkcircle[recent_30days[19]] },
+          { x: "7", y: "3", heat: darkcircle[recent_30days[20]] },
          
-          { x: "8", y: "1", heat: 0 },
-          { x: "8", y: "2", heat: 0 },
-          { x: "8", y: "3", heat: 0 },
+          { x: "8", y: "1", heat: darkcircle[recent_30days[21]] },
+          { x: "8", y: "2", heat: darkcircle[recent_30days[22]] },
+          { x: "8", y: "3", heat: darkcircle[recent_30days[23]] },
 
-          { x: "9", y: "1", heat: 0 },
-          { x: "9", y: "2", heat: 1 },
-          { x: "9", y: "3", heat: 0 },
+          { x: "9", y: "1", heat: darkcircle[recent_30days[24]] },
+          { x: "9", y: "2", heat: darkcircle[recent_30days[25]] },
+          { x: "9", y: "3", heat: darkcircle[recent_30days[26]] },
 
-          { x: "10", y: "1", heat: 0},
-          { x: "10", y: "2", heat: 0 },
-          { x: "10", y: "3", heat: 0 },
+          { x: "10", y: "1", heat: darkcircle[recent_30days[27]]},
+          { x: "10", y: "2", heat: darkcircle[recent_30days[28]] },
+          { x: "10", y: "3", heat: darkcircle[recent_30days[29]] },
         ];        
         
         // create the chart and set the data
         chart = anychart.heatMap(data);
         
         // set the chart title
-        chart.title("기미 한달 기록");
+        chart.title("다크서클 기록");
         
         // create and configure the color scale.
         var customColorScale = anychart.scales.linearColor();
@@ -296,53 +283,53 @@
 
         // create the data 
         var data = [
-          { x: "1", y: "1", heat:  1 },
-          { x: "1", y: "2", heat: 1},
-          { x: "1", y: "3", heat: 1 },
+          { x: "1", y: "1", heat:  freckle[recent_30days[0]] },
+          { x: "1", y: "2", heat: freckle[recent_30days[1]] },
+          { x: "1", y: "3", heat: freckle[recent_30days[2]]  },
         
-          { x: "2", y: "1", heat: 0 },
-          { x: "2", y: "2", heat: 0 },
-          { x: "2", y: "3", heat: 1},
+          { x: "2", y: "1", heat: freckle[recent_30days[3]]  },
+          { x: "2", y: "2", heat: freckle[recent_30days[4]]  },
+          { x: "2", y: "3", heat: freckle[recent_30days[5]] },
           
-          { x: "3", y: "1", heat: 1 },
-          { x: "3", y: "2", heat: 1},
-          { x: "3", y: "3", heat: 1 },
+          { x: "3", y: "1", heat: freckle[recent_30days[6]]  },
+          { x: "3", y: "2", heat: freckle[recent_30days[7]] },
+          { x: "3", y: "3", heat: freckle[recent_30days[8]]  },
         
-          { x: "4", y: "1", heat: 1 },
-          { x: "4", y: "2", heat: 0},
-          { x: "4", y: "3", heat: 1 },
+          { x: "4", y: "1", heat: freckle[recent_30days[9]]  },
+          { x: "4", y: "2", heat: freckle[recent_30days[10]] },
+          { x: "4", y: "3", heat: freckle[recent_30days[11]]  },
        
-          { x: "5", y: "1", heat: 1 },
-          { x: "5", y: "2", heat: 1 },
-          { x: "5", y: "3", heat: 0 },
+          { x: "5", y: "1", heat: freckle[recent_30days[12]]  },
+          { x: "5", y: "2", heat: freckle[recent_30days[13]]  },
+          { x: "5", y: "3", heat: freckle[recent_30days[14]]  },
        
-          { x: "6", y: "1", heat: 0},
-          { x: "6", y: "2", heat: 1 },
-          { x: "6", y: "3", heat: 1 },
+          { x: "6", y: "1", heat: freckle[recent_30days[15]] },
+          { x: "6", y: "2", heat: freckle[recent_30days[16]]  },
+          { x: "6", y: "3", heat: freckle[recent_30days[17]] },
        
         
-          { x: "7", y: "1", heat: 0 },
-          { x: "7", y: "2", heat: 0 },
-          { x: "7", y: "3", heat: 0},
+          { x: "7", y: "1", heat: freckle[recent_30days[18]]  },
+          { x: "7", y: "2", heat: freckle[recent_30days[19]] },
+          { x: "7", y: "3", heat: freckle[recent_30days[20]] },
          
-          { x: "8", y: "1", heat: 1 },
-          { x: "8", y: "2", heat: 1 },
-          { x: "8", y: "3", heat: 1 },
+          { x: "8", y: "1", heat: freckle[recent_30days[21]] },
+          { x: "8", y: "2", heat: freckle[recent_30days[22]]  },
+          { x: "8", y: "3", heat: freckle[recent_30days[23]]  },
 
-          { x: "9", y: "1", heat: 1},
-          { x: "9", y: "2", heat: 0 },
-          { x: "9", y: "3", heat: 1 },
+          { x: "9", y: "1", heat: freckle[recent_30days[24]] },
+          { x: "9", y: "2", heat: freckle[recent_30days[25]]  },
+          { x: "9", y: "3", heat: freckle[recent_30days[26]]  },
 
-          { x: "10", y: "1", heat: 0},
-          { x: "10", y: "2", heat: 1 },
-          { x: "10", y: "3", heat: 1 },
+          { x: "10", y: "1", heat: freckle[recent_30days[27]] },
+          { x: "10", y: "2", heat: freckle[recent_30days[28]]  },
+          { x: "10", y: "3", heat: freckle[recent_30days[29]] },
         ];        
         
         // create the chart and set the data
         chart = anychart.heatMap(data);
         
         // set the chart title
-        chart.title("다크서클 한달 기록");
+        chart.title("기미 한달 기록");
         
 
         // create and configure the color scale.
