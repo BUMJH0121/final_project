@@ -35,7 +35,7 @@
 <section class="u-clearfix u-section-1" id="sec-47db">
   <div class="u-clearfix u-sheet u-sheet-1">
     <h2 class="u-custom-font u-font-montserrat u-text u-text-1">[오늘의 기록]</h2>
-    <img class="u-image u-image-1" src="{{ url_for('static', filename='img/face.png')}}" data-image-width="832" data-image-height="594">
+    <img class="u-image u-image-1" src="{{ url_for('static', filename='images/face.png')}}" data-image-width="832" data-image-height="594">
       
 
       
@@ -104,6 +104,16 @@
 <section class="u-clearfix u-section-4" id="sec-0f2f">
   <div class="u-clearfix u-sheet u-sheet-1"></div>
 </section>
+<div class ="container">
+  <div class="row">
+      <div class="'col-md-6"style="width:47%;">
+          <canvas id="myChartOne"></canvas>
+      </div>
+      <div class="'col-md-6" style="width:53%;">
+          <canvas id="myChartTwo"></canvas>
+      </div>
+  </div>
+</div>
 <script>
     let myChartOne = document.getElementById('myChartOne').getContext('2d');
     let myChartTwo = document.getElementById('myChartTwo').getContext('2d');

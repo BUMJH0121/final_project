@@ -284,7 +284,7 @@ def graph():
     day4 = [day for day in code4_df['date']]
     value4 = [value for value in code4_df['sum']]
     value5 = [value for value in code5_df['sum']]
-    return render_template("Graph.html", usern = user_name, **locals(), result=result, results=results,recent_30days=recent_30days, darkcircle = darkcircle,freckle=freckle)
+    return render_template("Graph.html", usern = user_name, **locals())
 
 @app.route("/home/photo")
 @requires_auth
