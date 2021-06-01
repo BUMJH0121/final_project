@@ -37,7 +37,7 @@ auth0 = oauth.register(
 
 @app.route("/login")
 def login():
-    return auth0.authorize_redirect(redirect_uri='http://127.0.0.1:5000/callback')
+    return auth0.authorize_redirect(redirect_uri='http://15.237.112.4:5000/callback')
 
 @app.route("/logout")
 def logout():
@@ -138,11 +138,24 @@ def product():
     user_id = user['user_id']
     test_db = pymysql.connect(user='root', passwd='team09', host='35.180.122.212', db='mydb', charset='utf8')
     cursor = test_db.cursor(pymysql.cursors.DictCursor)
-    sql = "SELECT prod_name, brand, price, img_url, category from product_data join product_result on product_data.product_data_id=product_result.product_data_id where product_result.date = (select MAX(date) from product_result) and product_result.user_id = '{}' order by product_result.product_result_id DESC limit 15".format("oauth2|kakao|1750600619")
+    sql = "SELECT prod_name, brand, price, img_url, category,gender from product_data join product_result on product_data.product_data_id=product_result.product_data_id where product_result.date = (select MAX(date) from product_result) and product_result.user_id = '{}' order by product_result.product_result_id DESC limit 15".format("oauth2|kakao|1750600619")
     cursor.execute(sql)
     result = cursor.fetchall()
+    user_gender = result[0]['gender']
+    if user_gender =='f':
+        c1, c2, c3 = '스킨/토너','로션/에멀젼','에센스/세럼'
+    else:
+        c1, c2, c3 = '스킨/로션','에센스/크림','올인원'
+    cate1,cate2,cate3 = list(),list(),list()
+    for i in range(len(result)):
+        if result[i]['category']==c1:
+            cate1.append([result[i]['img_url'],result[i]['brand'],result[i]['prod_name'],result[i]['price']])
+        elif result[i]['category']==c2:
+            cate2.append([result[i]['img_url'],result[i]['brand'],result[i]['prod_name'],result[i]['price']])
+        elif result[i]['category']==c3:
+            cate3.append([result[i]['img_url'],result[i]['brand'],result[i]['prod_name'],result[i]['price']])
     test_db.close()
-    return render_template("Product.html", usern = user, result=result)
+    return render_template("Product.html", usern = user, cate1 = cate1, cate2 = cate2, cate3 = cate3)
 
 @app.route("/mypage")
 @requires_auth
