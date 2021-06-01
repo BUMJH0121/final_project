@@ -111,7 +111,7 @@ def home():
 def graph():
     user_name = session.get('profile', None)
     user_id = 'oauth2|kakao|1750600619'
-    sql = "SELECT user_face.user_face_id, sym_id, date, forehead, cheek_R, cheek_L, nose, philtrum, chin FROM user_face left JOIN face_detail ON user_face.user_face_id=face_detail.user_face_id Where user_id=%s"  # 생성
+    
     dbconn = pymysql.connect(
     host='35.180.122.212',
     port=3306, user = 'root',
@@ -120,7 +120,7 @@ def graph():
     charset='utf8'
     )
     cursor = dbconn.cursor(pymysql.cursors.DictCursor)
-    row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
+    
     # 증상, 원인에 대한 sql
     sql = "SELECT distinct user_face.date, prescription_data.sym_id, prescription_data.sym_name,prescription_data.symptom, prescription_data.cause, prescription_data.caution, prescription_data.solution FROM prescription_data JOIN user_face WHERE user_face.date = (select MAX(date) from user_face) and user_face.sym_id = prescription_data.sym_id  limit 3" 
     cursor.execute(sql)
@@ -162,8 +162,8 @@ def graph():
         day = i['date'].strftime('%Y-%m-%d')
         recent_30days.append(day)
 
-
-
+    sql = "SELECT user_face.user_face_id, sym_id, date, forehead, cheek_R, cheek_L, nose, philtrum, chin FROM user_face left JOIN face_detail ON user_face.user_face_id=face_detail.user_face_id Where user_id=%s"  # 생성
+    row_count = cursor.execute(sql, (user_id))  # 변수명 맞춰줘야 함
     if row_count > 0:  # select된 결과가 있으면
         user_info = cursor.fetchall()  # row 객체 가져오기
         print('user_info: ', user_info)
