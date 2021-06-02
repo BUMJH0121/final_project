@@ -1,0 +1,444 @@
+{% extends "index.html" %}
+
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.0/chart.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static', filename='css/graph.css')}}" media="screen">
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-heatmap.min.js"></script>
+<style>
+  /* html, body, #container {
+    width: 80%;
+    height: 60%;
+    margin: 0;
+    padding: 0;
+  } */
+
+  #container1, #container2 {
+    width: 50%;
+    height: 30%;
+    /* margin: 0; */
+    padding: 0;
+    margin:0 auto;
+  }
+</style>
+{% endblock %}
+    
+    
+
+
+
+{% block contents %}
+
+
+<section class="u-clearfix u-section-1" id="sec-47db">
+  <div class="u-clearfix u-sheet u-sheet-1">
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-1">[오늘의 기록]</h2>
+    <img class="u-image u-image-1" src="{{ url_for('static', filename='images/face.png')}}" data-image-width="832" data-image-height="594">
+      
+
+    {% if find[1] != 0 %} 
+    {% for d in results %}
+    {% if d["sym_id"] == 2 %}
+    <h6 class="u-text u-text-2">{{d.cheek_L}}</h6>
+    <h6 class="u-text u-text-3">{{d.cheek_R}}</h6>
+    <h6 class="u-text u-text-4">{{d.forehead}}</h6>
+    <h6 class="u-text u-text-5">{{d.chin}}</h6>
+    
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <h6 class="u-text u-text-2">0</h6>
+    <h6 class="u-text u-text-3">0</h6>
+    <h6 class="u-text u-text-4">0</h6>
+    <h6 class="u-text u-text-5">0</h6>
+    {% endif %}    
+    
+    {% if find[2] != 0 %}
+    {% for d in results %}
+    {% if d["sym_id"] == 3 %}  
+    <h6 class="u-text u-text-6">{{d.cheek_L}}</h6>
+    <h6 class="u-text u-text-7">{{d.cheek_R}}</h6>
+    <h6 class="u-text u-text-8">{{d.forehead}}</h6>
+    <h6 class="u-text u-text-9">{{d.chin}}</h6>
+     
+     {% endif %}
+    {% endfor %}
+    {% else %}
+     <h6 class="u-text u-text-6">0</h6>
+     <h6 class="u-text u-text-7">0</h6>
+     <h6 class="u-text u-text-8">0</h6>
+     <h6 class="u-text u-text-9">0</h6>
+     
+   {% endif %}  
+    
+    <h6 class="u-text u-text-10">{{t_cheekl}}</h6>
+    <h6 class="u-text u-text-11">{{t_cheekr}}</h6>
+    <h6 class="u-text u-text-12">{{t_forehead}}</h6>
+    <h6 class="u-text u-text-13">{{t_chin}}</h6>
+    
+    {% if find[0] != 0 %}
+    <h6 class="u-text u-text-14">있음</h6>
+    <h6 class="u-text u-text-15">있음</h6>
+    {% else %}
+    <h6 class="u-text u-text-14">없음</h6>
+    <h6 class="u-text u-text-15">없음</h6>
+    {% endif %}
+      
+    {% if find[3] != 0 %}  
+    <h6 class="u-text u-text-16">있음</h6>
+    <h6 class="u-text u-text-17">있음</h6>
+    {% else %}
+    <h6 class="u-text u-text-16">없음</h6>
+    <h6 class="u-text u-text-17">없음</h6>
+    {% endif %}
+
+    {% if find[1] != 0 %}
+    {% for d in results %}
+            {% if d["sym_id"] == 2 %}        
+	            <h6 class="u-text u-text-18">{{d.nose}}</h6>
+		            {% endif %}
+			            {% endfor %}             
+				    {% else %}
+				    <h6 class="u-text u-text-18">0</h6>
+				    {% endif %}
+				    {% if find[2] != 0 %}
+				            {% for d in results %}
+					            {% if d["sym_id"] == 3 %}        
+						            <h6 class="u-text u-text-19">{{d.nose}}</h6>
+							            {% endif %}
+								            {% endfor %}
+					{% else %}
+					<h6 class="u-text u-text-19">0</h6>
+					{% endif %}
+					<h6 class="u-text u-text-20">{{t_nose}}</h6>
+      
+  </div>
+</section>
+<section class="u-align-left u-clearfix u-section-2" id="sec-5006">
+  <div class="u-clearfix u-sheet u-sheet-1">
+
+    <h1 class="u-text u-text-custom-color-1 u-text-1">증​ 상</h1> 
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-2">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-3">{{i.sym_name}}</h6>
+    <p class="u-text u-text-4">{{i.symptom}}</p>
+    {% endfor %}
+      
+    
+    <h1 class="u-text u-text-custom-color-1 u-text-5">원 인</h1>
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-6">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-7">{{i.sym_name}}</h6>
+    <p class="u-text u-text-8">{{i.cause}}</p>
+    {% endfor %}  
+      
+    <h1 class="u-text u-text-custom-color-1 u-text-9">주의사항</h1>
+    {% for i in result %}
+    <h2 class="u-custom-font u-font-montserrat u-text u-text-10">트러블 :</h2>
+    <h6 class="u-custom-font u-font-montserrat u-text u-text-11">{{i.sym_name}}</h6>
+    <p class="u-text u-text-12">{{i.caution}}</p>
+    {% endfor %}  
+     
+  </div>
+</section>
+<br>
+<h2 align='center'>[일주일 기록]</h2>
+<div class ="container" >
+  <div class="row">
+      <div class="'col-md-6"style="width:47%; margin-left:300px; margin-bottom:150px">
+	   <canvas id="myChartOne"></canvas>
+      </div>
+      <h2 align='center'>[한달 기록]</h2>
+      <div align='center' style="font-size: large;">여드름 한달 기록<div> 
+      <div class="row">
+        <div class="'col-md-6" style="width:53%; margin-left:280px">
+	         <canvas id="myChartTwo"></canvas>
+	</div>
+	 </div>
+	 <br>
+	 <br>
+  </div>
+</div>
+<script>
+    let myChartOne = document.getElementById('myChartOne').getContext('2d');
+    let myChartTwo = document.getElementById('myChartTwo').getContext('2d');
+
+
+<!-- 1주일 bar 그래프-->
+    let barChart= new Chart(myChartOne, {
+        type : 'bar',
+        data:{
+            labels:{{ day2 | tojson }},
+            datasets : [{
+                label : '구진성 여드름',
+                data : {{ value2 | tojson}},
+                backgroundColor:'rgba(206,29,22,.5)',
+                borderWidth:1,
+                borderColor: "red",
+                hoverBackgroundColor:"red"
+            }
+            ,
+            {
+                label : '농포성 여드름',
+                data : {{ value3 | tojson }},
+                backgroundColor:'rgba(40,161,130,.5)',
+                borderWidth:1,
+                borderColor: "green",
+                hoverBackgroundColor:"green"
+            }]
+        }
+    });
+
+<!--1달 line 그래프-->
+    let barChartTwo= new Chart(myChartTwo,{
+        type : 'line',
+        data:{
+            labels:{{ day4 | tojson }},
+            datasets : [{
+                label : '구진성 여드름',
+                data : {{ value4 | tojson}},
+                borderWidth:2,
+                borderColor: "rgba(206,29,22,.5)",
+                hoverBackgroundColor:"red",
+                fill: false,
+
+
+            },
+            {
+                label : '농포성 여드름',
+                data : {{ value5 | tojson}},
+                borderWidth:2,
+                borderColor: "rgba(40,161,130,.5)",
+                hoverBackgroundColor:"green",
+                fill: false,
+
+            }]
+        }
+    });
+</script>
+<div align='center' style="font-size: xx-small;">-왼쪽 상단이 가장 최근 기록입니다-<div>
+
+		                                <br>
+
+    <div id="container2" ></div>
+    <div id="container1"></div>
+
+
+    <script>
+      var recent_30days = {{ recent_30days|tojson }};
+      var darkcircle = {{ darkcircle|tojson }};
+      var freckle = {{ freckle|tojson }};
+
+      anychart.onDocumentReady(function () {
+        // create the data 
+        var data = [
+          { x: "1", y: "1", heat: darkcircle[recent_30days[0]]},
+          { x: "1", y: "2", heat: darkcircle[recent_30days[1]]},
+          { x: "1", y: "3", heat: darkcircle[recent_30days[2]] },
+        
+          { x: "2", y: "1", heat: darkcircle[recent_30days[3]]},
+          { x: "2", y: "2", heat: darkcircle[recent_30days[4]]},
+          { x: "2", y: "3", heat: darkcircle[recent_30days[5]]},
+          
+          { x: "3", y: "1", heat: darkcircle[recent_30days[6]] },
+          { x: "3", y: "2", heat: darkcircle[recent_30days[7]]},
+          { x: "3", y: "3", heat: darkcircle[recent_30days[8]] },
+      
+          { x: "4", y: "1", heat: darkcircle[recent_30days[9]] },
+          { x: "4", y: "2", heat: darkcircle[recent_30days[10]] },
+          { x: "4", y: "3", heat: darkcircle[recent_30days[11]] },
+       
+          { x: "5", y: "1", heat: darkcircle[recent_30days[12]] },
+          { x: "5", y: "2", heat: darkcircle[recent_30days[13]] },
+          { x: "5", y: "3", heat: darkcircle[recent_30days[14]] },
+       
+          { x: "6", y: "1", heat: darkcircle[recent_30days[15]] },
+          { x: "6", y: "2", heat: darkcircle[recent_30days[16]] },
+          { x: "6", y: "3", heat: darkcircle[recent_30days[17]] },
+       
+        
+          { x: "7", y: "1", heat: darkcircle[recent_30days[18]] },
+          { x: "7", y: "2", heat: darkcircle[recent_30days[19]] },
+          { x: "7", y: "3", heat: darkcircle[recent_30days[20]] },
+         
+          { x: "8", y: "1", heat: darkcircle[recent_30days[21]] },
+          { x: "8", y: "2", heat: darkcircle[recent_30days[22]] },
+          { x: "8", y: "3", heat: darkcircle[recent_30days[23]] },
+
+          { x: "9", y: "1", heat: darkcircle[recent_30days[24]] },
+          { x: "9", y: "2", heat: darkcircle[recent_30days[25]] },
+          { x: "9", y: "3", heat: darkcircle[recent_30days[26]] },
+
+          { x: "10", y: "1", heat: darkcircle[recent_30days[27]]},
+          { x: "10", y: "2", heat: darkcircle[recent_30days[28]] },
+          { x: "10", y: "3", heat: darkcircle[recent_30days[29]] },
+        ];        
+        
+        // create the chart and set the data
+        chart = anychart.heatMap(data);
+        
+        // set the chart title
+        chart.title("다크서클 한달  기록");
+        
+        // create and configure the color scale.
+        var customColorScale = anychart.scales.linearColor();
+        customColorScale.colors(["gray", "skyblue"]);
+        
+        // set the color scale as the color scale of the chart
+        chart.colorScale(customColorScale);
+        
+        // set the container id
+        chart.container("container1");
+        
+        // initiate drawing the chart
+        chart.draw();
+        // hide number
+        chart.labels().enabled(false)
+        
+        var xlabels = chart.xAxis().labels();
+        xlabels.enabled(false);
+
+        var ylabels = chart.yAxis().labels();
+        ylabels.enabled(false);
+       
+
+        var customColorScale = anychart.scales.ordinalColor();
+        customColorScale.ranges([
+          { less: 0.5, name: '없음', color: '#E6E6E6' },
+          { greater: 0.55, name: '있음', color: '#C6E476' }
+        ]);
+
+        customColorScale.colors(["#E6E6E6", "#C6E476"]);
+
+          // set the color scale as the color scale of the chart
+          chart.colorScale(customColorScale);
+          
+          // enable the legend
+          chart.legend(true);
+  
+        var categoryNames = ["없음", "있음"]
+
+        var tooltip = chart.tooltip();
+        tooltip.fontWeight(600);
+        tooltip.positionMode("point");        
+        tooltip.format(function () {
+          if (this.heat <= 0.5) {
+            return ("Value: " + this.heat + "\n Category: " + categoryNames[0]);
+          }
+          if (this.heat >= 0.55) {
+            return ("Value: " + this.heat + "\n Category: " + categoryNames[1]);
+          }
+        });
+        
+      });
+
+
+      anychart.onDocumentReady(function () {
+
+        // create the data 
+        var data = [
+          { x: "1", y: "1", heat:  freckle[recent_30days[0]] },
+          { x: "1", y: "2", heat: freckle[recent_30days[1]] },
+          { x: "1", y: "3", heat: freckle[recent_30days[2]]  },
+        
+          { x: "2", y: "1", heat: freckle[recent_30days[3]]  },
+          { x: "2", y: "2", heat: freckle[recent_30days[4]]  },
+          { x: "2", y: "3", heat: freckle[recent_30days[5]] },
+          
+          { x: "3", y: "1", heat: freckle[recent_30days[6]]  },
+          { x: "3", y: "2", heat: freckle[recent_30days[7]] },
+          { x: "3", y: "3", heat: freckle[recent_30days[8]]  },
+        
+          { x: "4", y: "1", heat: freckle[recent_30days[9]]  },
+          { x: "4", y: "2", heat: freckle[recent_30days[10]] },
+          { x: "4", y: "3", heat: freckle[recent_30days[11]]  },
+       
+          { x: "5", y: "1", heat: freckle[recent_30days[12]]  },
+          { x: "5", y: "2", heat: freckle[recent_30days[13]]  },
+          { x: "5", y: "3", heat: freckle[recent_30days[14]]  },
+       
+          { x: "6", y: "1", heat: freckle[recent_30days[15]] },
+          { x: "6", y: "2", heat: freckle[recent_30days[16]]  },
+          { x: "6", y: "3", heat: freckle[recent_30days[17]] },
+       
+        
+          { x: "7", y: "1", heat: freckle[recent_30days[18]]  },
+          { x: "7", y: "2", heat: freckle[recent_30days[19]] },
+          { x: "7", y: "3", heat: freckle[recent_30days[20]] },
+         
+          { x: "8", y: "1", heat: freckle[recent_30days[21]] },
+          { x: "8", y: "2", heat: freckle[recent_30days[22]]  },
+          { x: "8", y: "3", heat: freckle[recent_30days[23]]  },
+
+          { x: "9", y: "1", heat: freckle[recent_30days[24]] },
+          { x: "9", y: "2", heat: freckle[recent_30days[25]]  },
+          { x: "9", y: "3", heat: freckle[recent_30days[26]]  },
+
+          { x: "10", y: "1", heat: freckle[recent_30days[27]] },
+          { x: "10", y: "2", heat: freckle[recent_30days[28]]  },
+          { x: "10", y: "3", heat: freckle[recent_30days[29]] },
+        ];        
+        
+        // create the chart and set the data
+        chart = anychart.heatMap(data);
+        
+        // set the chart title
+        chart.title("기미 한달 기록");
+        
+
+        // create and configure the color scale.
+        var customColorScale = anychart.scales.linearColor();
+        customColorScale.colors(["#E6E6E6", "#58ACFA"]);
+        
+        // set the color scale as the color scale of the chart
+        chart.colorScale(customColorScale);
+        
+        // set the container id
+        chart.container("container2");
+        
+        // initiate drawing the chart
+        chart.draw();
+        // hide number
+        chart.labels().enabled(false)
+        
+        var xlabels = chart.xAxis().labels();
+        xlabels.enabled(false);
+
+        var ylabels = chart.yAxis().labels();
+        ylabels.enabled(false);
+       
+
+        var customColorScale = anychart.scales.ordinalColor();
+        customColorScale.ranges([
+          { less: 0.5, name: '없음', color: '#E6E6E6' },
+          { greater: 0.55, name: '있음', color: '#90DEF7' }
+        ]);
+
+        customColorScale.colors(["#E6E6E6", "#90DEF7"]);
+
+          // set the color scale as the color scale of the chart
+          chart.colorScale(customColorScale);
+          
+          // enable the legend
+          chart.legend(true);
+  
+        var categoryNames = ["없음", "있음"]
+
+        var tooltip = chart.tooltip();
+        tooltip.fontWeight(600);
+        tooltip.positionMode("point");        
+        tooltip.format(function () {
+          if (this.heat <= 0.5) {
+            return ("Value: " + this.heat + "\n Category: " + categoryNames[0]);
+          }
+          if (this.heat >= 0.55) {
+            return ("Value: " + this.heat + "\n Category: " + categoryNames[1]);
+          }
+        });
+        
+      });
+    </script>
+
+{% endblock contents %}   
